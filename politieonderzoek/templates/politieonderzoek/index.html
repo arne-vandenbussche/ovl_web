@@ -16,21 +16,29 @@
     </div>
     <div class="row">
         <div class="col mb-3">
-            <form>
+            <form method="post" action="{% url 'main-page' %}">
+            {% csrf_token %}
                 <div class="mb-3">
                    <label for="zoekwaardeafkorting" class="form-label">Geef hier een afkorting</label>
-                   <input type="text" class="form-control" id="zoekwaardeafkorting">
+                   <input type="text" class="form-control" {% if politieterm_form.afkorting.errors %}is-invalid{% endif %}
+                       name="afkorting" id="zoekwaardeafkorting"
+                       value="{{ politieterm_form.data.afkorting }}">
+                    {% for error in politieterm_form.afkorting.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="hidden" name="submit_type" value="politieterm">
+                <button type="submit" class="btn btn-primary">Zoek</button>
             </form>
         </div>
     </div>
+    {% if politieterm_result %}
     <div class="row">
         <div class="col-4">
             <strong>Afkorting:</strong>
         </div>
         <div class="col-8">
-               
+               {{ politieterm_result.afkorting }}
         </div>
        </div>
     <div class="row">
@@ -38,7 +46,7 @@
             <strong>Betekenis:</strong>
         </div>
         <div class="col-8">
-               
+              {{ politieterm_result.betekenis }} 
         </div>
     </div>
     <div class="row">
@@ -46,9 +54,12 @@
             <strong>Uitleg:</strong>
         </div>
         <div class=col-8>
-               
+               {{ politieterm_result.uitleg }}
         </div>
     </div>
+    {% elif politieterm_error %}
+    <div class="alert alert-warning">{{ politieterm_error }}</div>
+    {% endif %}
 </section>
 
 <section id="nummerplaten" >
@@ -62,20 +73,26 @@
     </div>
     <div class="row">
         <div class="col mb-3">
-            <form>
+            <form method="post" action="{% url 'main-page' %}">
+            {% csrf_token %}
                 <div class="mb-3">
                    <label for="nummerplaat" class="form-label">Nummerplaat</label>
-                   <input type="text" class="form-control" id="nummerplaat">
+                   <input type="text" class="form-control" name="nummerplaat" id="nummerplaat"
+                       {% if auto_form.nummerplaat.errors %}is-invalid{% endif %}
+                       value="{{auto_form.data.nummerplaat}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="hidden" name="submit_type" value="auto">
+                <button type="submit" class="btn btn-primary" >Zoek</button>
             </form>
         </div>
-    </div><div class="row">
+    </div>
+    {% if auto_result %}
+    <div class="row">
         <div class="col-4">
             <strong>Nummerplaat:</strong>
         </div>
         <div class="col-8">
-               
+               {{ auto_result.nummerplaat }}
         </div>
        </div>
     <div class="row">
@@ -83,7 +100,7 @@
             <strong>Autotype:</strong>
         </div>
         <div class="col-8">
-               
+               {{ auto_result.autotype }}
         </div>
     </div>
     <div class="row">
@@ -91,7 +108,7 @@
             <strong>Kleur:</strong>
         </div>
         <div class=col-8>
-               
+               {{ auto_result.kleur }}
         </div>
     </div>
     <div class="row">
@@ -99,9 +116,12 @@
             <strong>Opmerkingen:</strong>
         </div>
         <div class="col-8">
-               
+               {{ auto_result.opmerkingen }}
         </div>
     </div>
+    {% elif auto_error %}
+    <div class="alert alert-warning">{{ auto_error }}</div>
+    {% endif %}
    </section>
 <section id="personen">
     <div class="row mt-5">
@@ -114,20 +134,27 @@
     </div>
     <div class="row">
         <div class="col mb-3">
-            <form>
+            <form method="post" action="{% url 'main-page' %}">
+            {% csrf_token %}
                 <div class="mb-3">
                    <label for="zoektermpersoon" class="form-label">Zoekterm</label>
-                   <input type="text" class="form-control" id="zoektermpersoon">
+                   <input type="text" class="form-control" name="zoektermpersoon" id="zoektermpersoon"
+                       {% if persoon_form.zoekterm.errors %}is-invalid{% endif %}
+                       value="{{persoon_form.data.zoektermpersoon}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="hidden" name="submit_type" value="persoon">
+                <button type="submit" class="btn btn-primary">Zoek</button>
             </form>
         </div>
-    </div><div class="row">
+    </div>
+    {% if persoon_results %}
+    {% for p in persoon_results %}
+    <div class="row">
         <div class="col-4">
             <strong>Voornaam:</strong>
         </div>
         <div class="col-8">
-               
+             {{ p.voornaam }}  
         </div>
        </div>
     <div class="row">
@@ -135,7 +162,7 @@
             <strong>Familienaam:</strong>
         </div>
         <div class="col-8">
-               
+               {{ p.familienaam }}
         </div>
     </div>
     <div class="row">
@@ -143,17 +170,21 @@
             <strong>Beroep:</strong>
         </div>
         <div class=col-8>
-               
+               {{ p.beroep }}
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-4">
             <strong>Opmerkingen:</strong>
         </div>
         <div class="col-8">
-               
+               {{ p.opmerkingen }}
         </div>
     </div>
+    {% endfor %}
+    {% elif persoon_error %}
+    <div class="alert alert-warning">{{ persoon_error }}</div>
+    {% endif %}
  
 </section>
 {% endblock %}
