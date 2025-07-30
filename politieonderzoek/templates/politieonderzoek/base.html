@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="nl">
     <head>
@@ -9,15 +10,17 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="{% static 'politieonderzoek/politieonderzoek.css' %}">
     </head>
     <body>
         <div class="container">
-            <div class="row">
+            <div class="row mt-5">
                 <div class="col">
-                    <!-- hier zullen we het logo van de politie zetten -->
+                    <img src="{% static 'politieonderzoek/logo_federale_politie.png' %}" 
+                        alt="Logo Federale Politie België">
                 </div>
                 <div class="col">
-                    <h1>Politieonderzoek</h1>
+                    <h1>Politieonderzoek OVL</h1>
                 </div>
             </div>
 
