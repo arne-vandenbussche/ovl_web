@@ -1,0 +1,159 @@
+{% extends "politieonderzoek/base.html" %} i
+
+{% block title %} OVL politieonderzoek {% endblock %} 
+
+{% block content %}
+<section id="politieafkortingen">
+    <div class="row">
+        <div class="col">
+            <h2>Politieafkortingen</h2>
+        </div>
+    </div>
+    <div class="row">
+           <div class="col">
+               <p>Geef een politieafkorting en we leggen uit wat die betekent.</p>
+           </div>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+            <form>
+                <div class="mb-3">
+                   <label for="zoekwaardeafkorting" class="form-label">Geef hier een afkorting</label>
+                   <input type="text" class="form-control" id="zoekwaardeafkorting">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Afkorting:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+       </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Betekenis:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Uitleg:</strong>
+        </div>
+        <div class=col-8>
+               
+        </div>
+    </div>
+</section>
+
+<section id="nummerplaten" >
+    <div class="row mt-5">
+        <div class="col">
+            <h2>Nummerplaten</h2>
+        </div>
+    </div>
+    <div class="row">
+        <p>Geef hier een nummerplaat en je krijgt meer informatie over deze auto.</p>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+            <form>
+                <div class="mb-3">
+                   <label for="nummerplaat" class="form-label">Nummerplaat</label>
+                   <input type="text" class="form-control" id="nummerplaat">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div><div class="row">
+        <div class="col-4">
+            <strong>Nummerplaat:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+       </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Autotype:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Kleur:</strong>
+        </div>
+        <div class=col-8>
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Opmerkingen:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+    </div>
+   </section>
+<section id="personen">
+    <div class="row mt-5">
+        <div class="col">
+            <h2>Personen</h2>
+        </div>
+    </div>
+    <div class="row">
+        <p>Zoek op de naam van de persoon (of een onderdeel van de naam).</p>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+            <form>
+                <div class="mb-3">
+                   <label for="zoektermpersoon" class="form-label">Zoekterm</label>
+                   <input type="text" class="form-control" id="zoektermpersoon">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div><div class="row">
+        <div class="col-4">
+            <strong>Voornaam:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+       </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Familienaam:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Beroep:</strong>
+        </div>
+        <div class=col-8>
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <strong>Opmerkingen:</strong>
+        </div>
+        <div class="col-8">
+               
+        </div>
+    </div>
+ 
+</section>
+{% endblock %}
