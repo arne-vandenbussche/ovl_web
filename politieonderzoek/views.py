@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.views import View
 from .forms import PolitietermSearchForm, AutoSearchForm, PersoonSearchForm
 from .models import Politieterm, Auto, Persoon
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class MainPageView(View):
+class MainPageView(LoginRequiredMixin, View):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'next'
     template_name = "politieonderzoek/index.html"
 
     def get(self, request):
@@ -50,14 +53,27 @@ class MainPageView(View):
                 context['persoon_form'] = form
                 if form.is_valid():
                     term = form.cleaned_data['zoektermpersoon']
-                    results = Persoon.objects.filter(
-                        voornaam__icontains=term
-                    ) | Persoon.objects.filter(
-                        familienaam__icontains=term
-                    )
-                    if results.exists():
-                        context['persoon_results'] = results
+                    normalized = term.replace(" ", "").lower()
+                    
+                    # Search for partials
+                    partial_matches = Persoon.objects.filter(
+                                        voornaam__icontains=term
+                                    ) | Persoon.objects.filter(
+                                        familienaam__icontains=term
+                                    )
+                    
+                    # Include exact match of voornaam + familienaam (normalized)
+                    all_matches = list(partial_matches)
+                    
+                    # Add additional exact matches (not already in the partials)
+                    for persoon in Persoon.objects.all():
+                        full_name = (persoon.voornaam + persoon.familienaam).replace(" ", "").lower()
+                        if full_name == normalized and persoon not in all_matches:
+                            all_matches.append(persoon)
+                    
+                    if all_matches:
+                        context['persoon_results'] = all_matches
                     else:
-                        context['persoon_error'] = "Geen persoon gevonden."
+                        context['persoon_error'] = "Geen personen gevonden."
 
             return render(request, self.template_name, context)
